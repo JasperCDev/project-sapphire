@@ -1,7 +1,14 @@
-import './style.css'
+import { Grid } from "./grid";
+import "./style.css";
 
-const c = document.getElementById("myCanvas") as HTMLCanvasElement;
-const ctx = c.getContext("2d")!;
-ctx.moveTo(0, 0);
-ctx.lineTo(200, 100);
-ctx.stroke();
+class Main {
+  grid: Grid;
+
+  constructor() {
+    const c = document.getElementById("myCanvas") as HTMLCanvasElement;
+    const ctx = c.getContext("2d")!;
+    this.grid = new Grid(c);
+  }
+}
+
+new Main();
