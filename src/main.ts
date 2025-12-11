@@ -1,7 +1,8 @@
+import { Entity } from "./entity";
 import { Grid } from "./grid";
 import "./style.css";
 
-class Main {
+class Main extends Entity {
   grid = new Grid();
   canvasWidth: number = 0;
   canvasHeight: number = 0;
@@ -10,6 +11,7 @@ class Main {
   context: CanvasRenderingContext2D;
 
   constructor() {
+    super();
     this.canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
     this.context = this.canvas.getContext("2d")!;
     window.addEventListener("resize", () => this.setCanvasSize());
@@ -28,6 +30,27 @@ class Main {
     this.canvas.width = this.canvasWidth;
     this.canvas.height = this.canvasHeight;
   }
+
+  public draw(ctx: CanvasRenderingContext2D, dt: number): void {
+    this.grid.draw(ctx, dt);
+  }
+
+  public update(dt: number): void {
+    this.grid.update(dt);
+  }
 }
 
-new Main();
+const main = new Main();
+
+let prevTime = 0;
+
+function gameLoop(time: number) {
+  if (!prevTime) prevTime = time;
+  const dt = (time - prevTime) / 1000;
+  prevTime = time;
+  main.update(dt);
+  main.draw(main.context, dt);
+  requestAnimationFrame(gameLoop);
+}
+
+requestAnimationFrame(gameLoop);
