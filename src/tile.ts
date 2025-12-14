@@ -20,8 +20,8 @@ export class Tile extends Entity {
 
   draw(ctx: CanvasRenderingContext2D, deltaTime: number): void {
     ctx.fillRect(
-      this.col * (ctx.canvas.height / Grid.ROW_COUNT),
-      this.row * (ctx.canvas.height / Grid.ROW_COUNT),
+      (this.col - 1) * (ctx.canvas.height / Grid.ROW_COUNT),
+      (this.row - 1) * (ctx.canvas.height / Grid.ROW_COUNT),
       ctx.canvas.height / Grid.ROW_COUNT - 5,
       ctx.canvas.height / Grid.ROW_COUNT - 5
     );
