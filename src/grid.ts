@@ -6,7 +6,7 @@ export class Grid extends Entity {
   static COL_COUNT = 32;
   private tiles = Array.from(
     { length: Grid.COL_COUNT * Grid.ROW_COUNT },
-    (_, i) => new Tile(i)
+    (_, i) => new Tile(i, i % 2 === 0 ? "soil" : "grass")
   );
 
   public draw(context: CanvasRenderingContext2D, dt: number): void {

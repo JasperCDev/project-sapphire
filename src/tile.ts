@@ -5,25 +5,30 @@ class Point {
   constructor(public row: number, public col: number) {}
 }
 
+type TileType = "soil" | "grass";
+
 export class Tile extends Entity {
   public row: number;
   public col: number;
   public id: string;
   static idHelper = 0;
-  constructor(tileIndex: number) {
+
+
+  constructor(public index: number, public type: TileType = "soil") {
     super();
-    let tilePoint = Tile.getPointFromIterator(tileIndex);
+    let tilePoint = Tile.getPointFromIterator(this.index);
     this.id = Tile.getIdFromPoint(tilePoint);
     this.row = tilePoint.row;
     this.col = tilePoint.col;
   }
 
   draw(ctx: CanvasRenderingContext2D, deltaTime: number): void {
+    ctx.fillStyle = this.type === "soil" ? "#a0522d" : "#228b22";
     ctx.fillRect(
       (this.col - 1) * (ctx.canvas.height / Grid.ROW_COUNT),
       (this.row - 1) * (ctx.canvas.height / Grid.ROW_COUNT),
-      ctx.canvas.height / Grid.ROW_COUNT - 5,
-      ctx.canvas.height / Grid.ROW_COUNT - 5
+      ctx.canvas.height / Grid.ROW_COUNT,
+      ctx.canvas.height / Grid.ROW_COUNT
     );
   }
 
