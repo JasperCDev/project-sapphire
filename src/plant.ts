@@ -1,12 +1,12 @@
-import { Entity } from "./entity";
 import { Grid } from "./grid";
+import { GridObject } from "./grid-object";
 
-export class Plant extends Entity {
+export class Plant extends GridObject {
   public id: number;
   static idHelper = 0;
 
-  constructor(public row: number, public col: number) {
-    super();
+  constructor(row: number, col: number) {
+    super(row, col);
     this.id = ++Plant.idHelper;
   }
 
