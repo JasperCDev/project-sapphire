@@ -1,17 +1,36 @@
 import { Entity } from "./entity";
+import type { GridObject } from "./grid-object";
+
+export class Mouse {
+  position: { x: number; y: number } = { x: 0, y: 0 };
+  isDown: boolean = false;
+
+  constructor() {
+    window.addEventListener("mousemove", this.handleMouseMove.bind(this));
+    window.addEventListener("mouseup", this.handleMouseUp.bind(this));
+    window.addEventListener("mousedown", this.handleMouseDown.bind(this));
+  }
+
+  private handleMouseMove(event: MouseEvent) {
+    this.position.x = event.clientX;
+    this.position.y = event.clientY;
+  }
+  private handleMouseUp(_event: MouseEvent) {
+    this.isDown = false;
+  }
+  private handleMouseDown(_event: MouseEvent) {
+    this.isDown = true;
+  }
+}
 
 export class Interaction extends Entity {
-
-  mousePosition: { x: number; y: number } = { x: 0, y: 0 };
-  mouseDown: boolean = false;
-  mouseDownPosition: { x: number; y: number } = { x: 0, y: 0 };
-  prevMouseDownPosition : { x: number; y: number } = { x: 0, y: 0 };
+  mouse = new Mouse();
 
   constructor() {
     super();
-    window.addEventListener("mousemove", (event) => {
-      this.mousePosition.x = event.clientX;
-      this.mousePosition.y = event.clientY;
-    });
+  }
+
+  update(deltaTime: number): void {
+
   }
 }
