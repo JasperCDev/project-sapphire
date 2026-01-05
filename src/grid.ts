@@ -1,5 +1,6 @@
 import { Entity } from "./entity";
 import type { GridObject } from "./grid-object";
+import   { Interaction } from "./interaction";
 import { Plant } from "./plant";
 import { Tile } from "./tile";
 
@@ -13,10 +14,12 @@ export class Grid extends Entity {
   public gridObjects = Array.from<GridObject | undefined>({
     length: Grid.COL_COUNT * Grid.ROW_COUNT,
   });
+  interaction: Interaction;
 
   constructor() {
     super();
     this.gridObjects[0] = new Plant(1, 1);
+    this.interaction = new Interaction(this.tiles);
   }
 
   public draw(context: CanvasRenderingContext2D, dt: number): void {

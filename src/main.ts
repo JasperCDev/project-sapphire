@@ -5,7 +5,6 @@ import "./style.css";
 
 class Main extends Entity {
   grid = new Grid();
-  interaction = new Interaction();
   canvasWidth: number = 0;
   canvasHeight: number = 0;
   tileSize: number = 0;

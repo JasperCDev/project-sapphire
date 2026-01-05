@@ -32,6 +32,10 @@ export class Tile extends Entity {
     );
   }
 
+  public onClick(): void {
+    this.type = this.type === "soil" ? "grass" : "soil";
+  }
+
   static getIteratorFromId(id: string) {
     let split = id.split("-");
     let rowCount = parseInt(split[0]);
