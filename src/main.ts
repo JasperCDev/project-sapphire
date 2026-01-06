@@ -1,23 +1,47 @@
 import { Entity } from "./entity";
 import { Grid } from "./grid";
-import { Interaction } from "./interaction";
 import "./style.css";
 
-class Main extends Entity {
-  grid = new Grid();
-  canvasWidth: number = 0;
-  canvasHeight: number = 0;
-  tileSize: number = 0;
+export class Main extends Entity {
+  grid: Grid;
+  _canvasWidth: number = 0;
+  _canvasHeight: number = 0;
+  _tileSize: number = 0;
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
 
   constructor() {
     super();
+    this.grid = new Grid(this.tileSize, this.canvasWidth, this.canvasHeight);
     this.canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
     this.context = this.canvas.getContext("2d")!;
     window.addEventListener("resize", () => this.setCanvasSize());
     this.setCanvasSize();
     this.setCanvasSize();
+  }
+
+  get tileSize() {
+    return this._tileSize
+  }
+
+  set tileSize(size: number) {
+    this._tileSize = size;
+  }
+
+  get canvasWidth() {
+    return this._canvasWidth
+  }
+
+  set canvasWidth(width: number) {
+    this._canvasWidth = width;
+  }
+
+  get canvasHeight() {
+    return this._canvasHeight
+  }
+
+  set canvasHeight(height: number) {
+    this._canvasHeight = height;
   }
 
   private setCanvasSize() {

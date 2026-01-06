@@ -1,6 +1,5 @@
 import { Entity } from "./entity";
 import { Grid } from "./grid";
-import type { GridObject } from "./grid-object";
 import type { Tile } from "./tile";
 
 export class Mouse {
@@ -28,32 +27,30 @@ export class Mouse {
 export class Interaction extends Entity {
   private mouse = new Mouse();
 
-  constructor(
-    private tiles: Tile[]
-  ) {
+  constructor(private grid: Grid, private tiles: Tile[]) {
     super();
   }
 
   update(deltaTime: number): void {
-    // const hoveredPoint = this.getHoveredTilePoint();
+    const hoveredPoint = this.getHoveredTilePoint();
   }
-  // public getPointFromMousePosition(mousePos: { x: number; y: number }) {
-  //       // x & y mouse position relative to the window
-  //       let relX = mousePos.x - (window.innerWidth - this.gridWidth) / 2;
-  //       let relY = mousePos.y - (window.innerHeight - this.gridHeight) / 2;
+  public getPointFromMousePosition(mousePos: { x: number; y: number }) {
+    // x & y mouse position relative to the window
+    let relX = mousePos.x - (window.innerWidth - this.grid.width) / 2;
+    let relY = mousePos.y - (window.innerHeight - this.grid.height) / 2;
 
-  //       // x & y remainder from tilesize
-  //       let modX = relX % .TILE_SIZE;
-  //       let modY = relY % this.tileSize;
+    // x & y remainder from tilesize
+    let modX = relX % this.grid.tileSize;
+    let modY = relY % this.grid.tileSize;
 
-  //       // x & y snapped to grid
-  //       let snappedX = relX - modX;
-  //       let snappedY = relY - modY;
+    // x & y snapped to grid
+    let snappedX = relX - modX;
+    let snappedY = relY - modY;
 
-  //       // row & col rounded from the tile count of x & y + 1
-  //       return {
-  //           row: Math.round(snappedY / this.tileSize + 1),
-  //           col: Math.round(snappedX / this.tileSize + 1),
-  //       };
-  //   }
+    // row & col rounded from the tile count of x & y + 1
+    return {
+      row: Math.round(snappedY / this.grid.tileSize + 1),
+      col: Math.round(snappedX / this.grid.tileSize + 1),
+    };
+  }
 }
