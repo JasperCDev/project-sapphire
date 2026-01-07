@@ -12,7 +12,7 @@ export class Main extends Entity {
 
   constructor() {
     super();
-    this.grid = new Grid(this.tileSize, this.canvasWidth, this.canvasHeight);
+    this.grid = new Grid(this);
     this.canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
     this.context = this.canvas.getContext("2d")!;
     window.addEventListener("resize", () => this.setCanvasSize());

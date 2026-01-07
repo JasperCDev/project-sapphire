@@ -17,10 +17,28 @@ export class Grid extends Entity {
   });
   interaction: Interaction;
 
-  constructor(public tileSize: number, public width: number ,public height: number) {
+  get width() {
+    return this.main.canvasWidth;
+  }
+  get height() {
+    return this.main.canvasHeight;
+  }
+  get tileSize() {
+    return this.main.tileSize;
+  }
+
+  constructor(private main: Main) {
     super();
+
+
     this.gridObjects[0] = new Plant(1, 1);
     this.interaction = new Interaction(this, this.tiles);
+  }
+
+
+
+  public update(deltaTime: number): void {
+    this.interaction.update(deltaTime);
   }
 
   public draw(context: CanvasRenderingContext2D, dt: number): void {

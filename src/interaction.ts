@@ -1,6 +1,6 @@
 import { Entity } from "./entity";
 import { Grid } from "./grid";
-import type { Tile } from "./tile";
+import { Tile } from "./tile";
 
 export class Mouse {
   position: { x: number; y: number } = { x: 0, y: 0 };
@@ -26,13 +26,22 @@ export class Mouse {
 
 export class Interaction extends Entity {
   private mouse = new Mouse();
+  mouseDownPosition: { x: number; y: number } | null = null;
 
   constructor(private grid: Grid, private tiles: Tile[]) {
     super();
   }
 
-  update(deltaTime: number): void {
-    const hoveredPoint = this.getHoveredTilePoint();
+  update(_deltaTime: number): void {
+    const hoveredPoint = this.getPointFromMousePosition(this.mouse.position);
+    const tileIndex = Tile.getIteratorFromPoint(hoveredPoint);
+    if (this.mouse.isDown && !this.mouseDownPosition) {
+      this.mouseDownPosition = { ...this.mouse.position };
+    }
+    if (this.mouse.isDown === false && this.mouseDownPosition) {
+      this.mouseDownPosition = null;
+      this.tiles[tileIndex].onClick();
+    }
   }
   public getPointFromMousePosition(mousePos: { x: number; y: number }) {
     // x & y mouse position relative to the window
